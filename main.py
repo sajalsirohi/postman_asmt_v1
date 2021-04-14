@@ -1,5 +1,3 @@
-import pandas as pd
-
 from sql_utilities import *
 
 mt = MaintainTime()
@@ -26,6 +24,7 @@ def main():
     # # Read data from the CSV
     data = process_data(pd.read_csv("./products.csv"))
 
+    # # Get data already present in the table
     table_data = sql.get_from_sql(table_name="data", create_table_if_not_present=True)
     new_data = pd.concat([table_data, data]).drop_duplicates(['sku'], keep='last')
 
