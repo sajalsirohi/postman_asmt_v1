@@ -152,3 +152,14 @@ class MaintainTime:
             print(f"Time elapsed : {diff}")
         else:
             print(f"Time elapsed for operation - '{operation}' : {diff}")
+
+
+def setup():
+    """
+    Create neccessary directories if they do not exist
+    :return:
+    """
+    for dir_name in ['data', 'processed_data']:
+        path = os.path.join(ROOT_DIR, dir_name)
+        if not os.path.exists(path):
+            os.mkdir(path)

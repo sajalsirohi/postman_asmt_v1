@@ -2,6 +2,7 @@ import shutil
 from sql_utilities import *
 
 mt = MaintainTime()
+setup()
 
 
 def main():
