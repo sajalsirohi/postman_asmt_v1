@@ -1,10 +1,14 @@
+import os
+
 import urllib
 from datetime import datetime as dt
 
 import pandas as pd
-from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData
+from sqlalchemy import create_engine, Table, Column, String, MetaData
 from sqlalchemy.exc import *
 meta = MetaData()
+
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def process_data(data):

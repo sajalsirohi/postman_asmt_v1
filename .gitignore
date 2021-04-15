@@ -1,7 +1,9 @@
-products.csv
+data/products.csv
 
 /venv
 
 __pycache__/
 
 .idea/
+
+data

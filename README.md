@@ -36,11 +36,25 @@ CREATE TABLE master.dbo.[data] (
 ## What is done from “Points to achieve”
 - [x] Your code should follow concept of OOPS
 - [x] Support for regular non-blocking parallel ingestion of the given file into a table. Consider thinking about the scale of what should happen if the file is to be processed in 2 mins.<br>`The whole process gets completed in under 2 mins` <br>
+  <br>
+  ```bash
+  Time elapsed for operation - 'Loading data into SQL, after retrieving it from CSV : products.csv' : 0:00:15.068280
+  Time elapsed for operation - 'Loading data into SQL, after retrieving it from CSV : products2.csv' : 0:00:31.829158
+  Time elapsed for operation - 'Loading data into SQL, after retrieving it from CSV : products3.csv' : 0:00:47.151718
+  ```
+  Where products.csv is the raw File, products2.csv is the same file again, products3.csv file contains some changesto validate if the update is happening and overall working logic of the code.
+  Below code let us see the update we did in `products3.csv` is reflected or not in the table.
+    ```SQL
+    select * from data where name = 'Sajal Sirohi'
+    ```
+  Below is the result of the query : 
+
+| name         | sku                | description                                                                        |
+|--------------|--------------------|------------------------------------------------------------------------------------|
+| Sajal Sirohi | a-new-primary-key  | This is a good thing I think so.                                                   |
+| Sajal Sirohi | lay-raise-best-end | Art community floor adult your single type. Per back community former stock thing. |
+  
+
 - [x] Support for updating existing products in the table based on `sku` as the primary key. (Yes, we know about the kind of data in the file. You need to find a workaround for it. <br>`For this approach I removed all the duplicates from SKU column to make it primary key` <br>
 - [x] All product details are to be ingested into a single table
 - [x] An aggregated table on above rows with `name` and `no. of products` as the columns
-
- 
- 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
