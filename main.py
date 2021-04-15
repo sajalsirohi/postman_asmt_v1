@@ -1,4 +1,4 @@
-import os
+import shutil
 from sql_utilities import *
 
 mt = MaintainTime()
@@ -39,6 +39,9 @@ def main():
 
             # # Stop the timer
             mt.stop(operation=f"Loading data into SQL, after retrieving it from CSV : {file}")
+
+            # # move the processed file to the archival folder
+            shutil.move(file_path, os.path.join(ROOT_DIR, 'processed_data', file))
 
 
 if __name__ == '__main__':
