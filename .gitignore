@@ -6,6 +6,8 @@ __pycache__/
 
 .idea/
 
-data/*
+data/
 
-processed_data/*
+processed_data/
+
+dags/.idea

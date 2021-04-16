@@ -11,10 +11,10 @@ def main():
     :return:
     """
     sql = SQL(
-        host_name="localhost",
-        database_name="master",
-        username="sa",
-        password="Igobacca1@",
+        host_name     = "localhost",
+        database_name = "master",
+        username      = "sa",
+        password      = "Igobacca1@",
     )
     # # Start the timer
     mt.start()
