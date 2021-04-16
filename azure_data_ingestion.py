@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 from multiprocessing.pool import ThreadPool
 
@@ -101,11 +103,11 @@ def main():
         username      = "sa",
         password      = "Igobacca1@",
     )
+
     sql.check_connection(skip_table_creation=True)
     last_processed = sql.latest_processed_time()
     blobs_to_process = []
     for blobs in all_blobs:
-        print(blobs.last_modified, last_processed)
         if blobs.last_modified > last_processed:
             blobs_to_process.append(blobs)
     if blobs_to_process:

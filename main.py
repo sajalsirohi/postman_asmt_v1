@@ -23,7 +23,7 @@ def postman_main():
     print(f"Connection string using to connect to pyodbc : {sql.connection_string}")
 
     # # Check if able to connect to the SQl server
-    sql.check_connection()
+    sql.check_connection(skip_table_creation=True)
 
     # # Get the path of the data folder, where we are expecting CSV files to be present.
     data_path = os.path.join(ROOT_DIR, 'data')

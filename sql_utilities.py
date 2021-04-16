@@ -16,7 +16,7 @@ def process_data(data):
     :param data: pandas.DataFrame
     :return:
     """
-    data['chg_dttm'] = dt.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+    data['chg_dttm'] = dt.utcnow().replace(microsecond=0)
     return data.drop_duplicates(subset="sku",
                                 keep='first')
 
@@ -101,7 +101,8 @@ class SQL:
         """
         assert isinstance(data, pd.DataFrame), f"Data should be a pandas DataFrame, received type : {type(data)}"
         self.conn.execute(f"drop table if exists {table_name}")
-        data.to_sql(name=table_name, con=self.conn, if_exists=if_exists, index=False)
+        self.create_table(table_name)
+        data.to_sql(name=table_name, con=self.conn, if_exists='append', index=False)
 
     def get_from_sql(self, table_name, create_table_if_not_present=True):
         """
@@ -116,15 +117,7 @@ class SQL:
             print(f"The following table : {table_name} is not present. Exception -> {e.args}\n"
                   f"Data is going to be inserted for the first time")
             if create_table_if_not_present:
-                print(f"Creating the table : {table_name} with [SKU] as primary key")
-                data = Table(
-                    table_name, meta,
-                    Column('name', String),
-                    Column('sku', String(50), primary_key=True),
-                    Column('description', String),
-                    Column('chg_dttm', DateTime)
-                )
-                meta.create_all(self.engine)
+                self.create_table(table_name)
             return pd.DataFrame([], columns=['name', 'sku', 'description', 'chg_dttm'])
         except Exception as e:
             raise e
@@ -149,6 +142,24 @@ class SQL:
             return dt.strptime(val, "%Y-%m-%d %H:%M:%S").replace(tzinfo=datetime.timezone.utc)
         else:
             return val
+
+    def create_table(self, table_name):
+        """
+        Create the table
+        :param table_name:
+        :return:
+        """
+        print(f"Creating the table : {table_name} with [SKU] as primary key")
+        data = Table(
+            table_name, meta,
+            Column('name', String),
+            Column('sku', String(50), primary_key=True),
+            Column('description', String),
+            Column('chg_dttm', DateTime),
+            extend_existing=True
+        )
+        meta.create_all(self.engine)
+
 
 class MaintainTime:
     """
