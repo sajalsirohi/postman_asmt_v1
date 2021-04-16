@@ -58,3 +58,7 @@ CREATE TABLE master.dbo.[data] (
 - [x] Support for updating existing products in the table based on `sku` as the primary key. (Yes, we know about the kind of data in the file. You need to find a workaround for it. <br>`For this approach I removed all the duplicates from SKU column to make it primary key` <br>
 - [x] All product details are to be ingested into a single table
 - [x] An aggregated table on above rows with `name` and `no. of products` as the columns
+
+## Additional points / features
+
+-[x] Airflow DAG to do a backup of the data by executing the script in the path `dags/scripts/backup.sql`. And uses `dags/data_backup_dag` to execute the SQL script

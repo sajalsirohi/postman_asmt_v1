@@ -11,3 +11,5 @@ data/
 processed_data/
 
 dags/.idea
+
+.env

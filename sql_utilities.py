@@ -3,7 +3,7 @@ import urllib
 from datetime import datetime as dt
 
 import pandas as pd
-from sqlalchemy import create_engine, Table, Column, String, MetaData
+from sqlalchemy import create_engine, Table, Column, String, MetaData, DateTime
 from sqlalchemy.exc import *
 
 meta = MetaData()
@@ -16,6 +16,7 @@ def process_data(data):
     :param data: pandas.DataFrame
     :return:
     """
+    data['chg_dttm'] = dt.utcnow().strftime("%Y-%m-%d %H:%M:%S")
     return data.drop_duplicates(subset="sku",
                                 keep='first')
 
@@ -121,12 +122,33 @@ class SQL:
                     Column('name', String),
                     Column('sku', String(50), primary_key=True),
                     Column('description', String),
+                    Column('chg_dttm', DateTime)
                 )
                 meta.create_all(self.engine)
-            return pd.DataFrame([], columns=['name', 'sku', 'description'])
+            return pd.DataFrame([], columns=['name', 'sku', 'description', 'chg_dttm'])
         except Exception as e:
             raise e
 
+    def execute_raw_query(self, query):
+        """
+        Execute raw query
+        :param query:
+        :return:
+        """
+        return pd.read_sql(query, self.conn)
+
+    def latest_processed_time(self, table_name="data", convert_to_datetime=True):
+        """
+        Get the latest time the data was processed
+        :return:
+        """
+        from datetime import datetime as dt
+        import datetime
+        val = list(self.execute_raw_query(f"SELECT MAX(CHG_DTTM) as CHG_DTTM FROM {table_name}")['CHG_DTTM'])[0]
+        if convert_to_datetime:
+            return dt.strptime(val, "%Y-%m-%d %H:%M:%S").replace(tzinfo=datetime.timezone.utc)
+        else:
+            return val
 
 class MaintainTime:
     """

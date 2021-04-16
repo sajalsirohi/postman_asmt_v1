@@ -1,11 +1,13 @@
 import shutil
 from sql_utilities import *
+from datetime import datetime as dt
+import os
 
 mt = MaintainTime()
 setup()
 
 
-def main():
+def postman_main():
     """
     Main driver of the program
     :return:
@@ -42,9 +44,10 @@ def main():
             mt.stop(operation=f"Loading data into SQL, after retrieving it from CSV : {file}")
 
             # # move the processed file to the archival folder
-            shutil.move(file_path, os.path.join(ROOT_DIR, 'processed_data', file))
+            shutil.move(file_path, os.path.join(ROOT_DIR, 'processed_data',
+                                                dt.utcnow().strftime("%Y_%m_%d_%H_%M_") + file))
 
 
 if __name__ == '__main__':
-    main()
+    postman_main()
 
