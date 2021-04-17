@@ -62,7 +62,25 @@ CREATE TABLE master.dbo.[data] (
 
 - [x] Support for updating existing products in the table based on `sku` as the primary key. (Yes, we know about the kind of data in the file. You need to find a workaround for it. <br>`For this approach I removed all the duplicates from SKU column to make it primary key` <br>
 - [x] All product details are to be ingested into a single table
-- [x] An aggregated table on above rows with `name` and `no. of products` as the columns
+- [x] An aggregated table on above rows with `name` and `no. of products` as the columns. <br>
+  `Instead of creating an Aggregated table, I chose to create an Aggregated View, which is much faster to create, and does not take up extra memory.`
+  
+```SQL_Latin1_General_CP1_CI_AS
+select * from VW_DATA vd 
+```
+Result : 
+
+| name             | no. of products |
+|------------------|-----------------|
+| Aaron Abbott     | 1               |
+| Aaron Alexander  | 1               |
+| Aaron Andrews    | 2               |
+| Aaron Bailey     | 5               |
+| Aaron Ayala      | 1               |
+| Aaron Ballard    | 1               |
+| Aaron Barton     | 1               |
+| Aaron Bryant DDS | 1               |
+| Aaron Bush       | 5               |
 
 ## Additional points / features
 

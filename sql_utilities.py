@@ -101,6 +101,16 @@ class SQL:
         """
         assert isinstance(data, pd.DataFrame), f"Data should be a pandas DataFrame, received type : {type(data)}"
         self.conn.execute(f"drop table if exists {table_name}")
+        self.conn.execute(f"DROP VIEW IF EXISTS VW_{table_name.upper()}")
+        self.conn.execute(f"""
+            CREATE VIEW VW_{table_name.upper()} AS SELECT
+                [name],
+                count(*) as [no. of products]
+            FROM
+                {table_name}
+            GROUP BY
+                [name]
+        """)
         self.create_table(table_name)
         data.to_sql(name=table_name, con=self.conn, if_exists='append', index=False)
 
