@@ -10,13 +10,14 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the pac
 pip3 install -r requirements.txt
 ```
 
-## Usage
 Before running the script, ensure an SQL server is running at `localhost`, with username = `sa` and password = `Igobacca1@`. Also need to ensure pyodbc driver `ODBC Driver 17 for SQL Server` are installed in your system correctly.
 I used 
 ```bash
 docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Igobacca1@" -p 1433:1433 --name RBC  -d mcr.microsoft.com/mssql/server:latest
 ```
-After ensuring DB is up and running, execute the script `main.py`
+After ensuring DB is up and running, put the data you want to process, in `path/to/code_dir/data` folder, which will either be created automatically when the script is executed, or you can create it yourself.  
+Then after placing the `csv` files in `data` folder, execute the script `main.py`
+
 ```bash
 python3 main.py
 ```
