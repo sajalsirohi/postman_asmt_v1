@@ -91,4 +91,4 @@ Result :
 - Instead of adding only one cloud end point (azure-blob), add NoSQL, SQL or other RDBMS Cloud endpoint to the ingestion framework.
 - Add an email notification system whenever the data ingestion happens and create a proper log file for the same, to track every process either in text format, or a metadata table, or either a pipe-delimited text file and then create an external table on it, to keep the logs data both in txt file and SQL flavor.
 - Add proper restartability to track where the process went wrong, at which file it went wrong, and then start the process again from that point.
-- Provide alternative to the PyODBC driver.
+- Dockerize the whole application to run the pipeline as a container
